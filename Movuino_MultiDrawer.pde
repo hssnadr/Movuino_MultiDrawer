@@ -7,10 +7,13 @@ int _curIndex = 0; // N;
 int _maxIndex = 0;
 
 void setup() {
-  size(640, 360);
+  callMovuino("127.0.0.1", 3000, 3001);
+
+  size(1200, 720);
   stroke(255);
   strokeWeight(4);
   noFill();
+  fill(255);
 
   timer0 = millis();
 
@@ -30,10 +33,16 @@ void draw() {
 
   if (true) {
     if (millis()-timer0 > 40) {
+      float valX_ = width * (0.5f + movuino.az / 1.0f) ; // mouseX;
+      float valY_ = height * (0.5f + movuino.ax / 1.0f) ; // mouseY;
+        
+      // float valX_ = mouseX; // width * (0.5f + mouseX / 640.0f) ; // mouseX;
+      // float valY_ = mouseY ; //  height * (0.5f + mouseY / 360.0f) ; // mouseY;
+      
       timer0 = millis();
 
-      if (mouseX != 0.0 && mouseY != 0.0) {
-        PVector curPos_ = new PVector(mouseX, mouseY);
+      if (valX_ != 0.0 && valY_ != 0.0) {
+        PVector curPos_ = new PVector(valX_, valY_);
         // PVector lastPos_ = points[_curIndex > 0 ? _curIndex-1 : _maxIndex-1];
         // if (dist(curPos_.x, curPos_.y, lastPos_.x, lastPos_.y) > 20) {
         points[_curIndex] = curPos_;
@@ -45,11 +54,10 @@ void draw() {
     }
   }
 
-  println("------------");
+  // println("------------");
   if (_maxIndex > 0) {
     // Compute tangents
     for (int i = 0; i < _maxIndex; i++) {
-      println(i, _maxIndex, i > 0 ? i-1 : _maxIndex-1, points[i]);
       PVector prevPoint_ = points[i > 0 ? i-1 : _maxIndex-1].copy();
       PVector nextPoint_ = points[i+1 < _maxIndex ? i+1 : 0].copy();
       tangents[i] = nextPoint_.sub(prevPoint_);
@@ -65,7 +73,7 @@ void draw() {
       // Straight paths
       stroke(255, 0, 0);
       strokeWeight(1);
-      // line(p0_.x, p0_.y, p1_.x, p1_.y);
+      //line(p0_.x, p0_.y, p1_.x, p1_.y);
 
       // Anchor points
       float mag_ = dist (p0_.x, p0_.y, p1_.x, p1_.y);
@@ -73,11 +81,11 @@ void draw() {
 
       stroke(0, 255, 0);
       PVector anchor0_ = p0_.copy().add(tangents[i].setMag(mag_));
-      line(points[i].x, points[i].y, anchor0_.x, anchor0_.y);
+      // line(points[i].x, points[i].y, anchor0_.x, anchor0_.y);
 
       stroke(0, 0, 255);
       PVector anchor1_ = p1_.copy().sub(tangents[j].setMag(mag_));
-      line(anchor1_.x, anchor1_.y, points[j].x, points[j].y);
+      // line(anchor1_.x, anchor1_.y, points[j].x, points[j].y);
 
       // Draw bezier
       stroke(255);
