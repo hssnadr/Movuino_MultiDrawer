@@ -1,99 +1,98 @@
-int N = 20;
-PVector points[] = new PVector[N]; // path point
-PVector tangents[] = new PVector[N]; // (forward) tangent direction for each points
+// Shape controller 0
+BezierShape _shape0 = new BezierShape();
+
+// Shape controller 1
+Movuino movuino1;
+Thread movuinoThread1;
+MovingMean _meanx1 = new MovingMean(30);
+MovingMean _meany1 = new MovingMean(30);
+BezierShape _shape1 = new BezierShape();
+
+// Shape controller 2
+Movuino movuino2;
+Thread movuinoThread2;
+MovingMean _meanx2 = new MovingMean(20);
+MovingMean _meany2 = new MovingMean(20);
+BezierShape _shape2 = new BezierShape();
 
 long timer0;
-int _curIndex = 0; // N;
-int _maxIndex = 0;
 
 void setup() {
-  callMovuino("127.0.0.1", 3000, 3001);
-
   size(1200, 720);
-  stroke(255);
-  strokeWeight(4);
-  noFill();
-  fill(255);
+
+  // MOVUINO
+  // callMovuino("127.0.0.1", 7400, 7401);
+
+  // Controller 1
+  movuino1 = new Movuino("127.0.0.1", 7400, 7401);
+  movuinoThread1 = new Thread(movuino1);
+  movuinoThread1.start();
+  movuino1.printRawDataCollect();
+  
+  // Controller 2
+  movuino2 = new Movuino("127.0.0.1", 3000, 3001);
+  movuinoThread2 = new Thread(movuino2);
+  movuinoThread2.start();
+  movuino2.printRawDataCollect();
+
+  // SHAPES
+  _shape1.begin();
+  // _shape2.setLength(30);
+  _shape2.begin();
 
   timer0 = millis();
-
-  // STATIC TEST
-  if (false) {
-    for (int i=0; i< N; i++) {
-      points[i] = new PVector(random(20, width-20), random(20, height-20));
-      println(i, points[i]);
-    }
-    _maxIndex = N;
-    // drawX();
-  }
 }
 
 void draw() {
   background(51);
 
-  if (true) {
-    if (millis()-timer0 > 40) {
-      float valX_ = width * (0.5f + movuino.az / 1.0f) ; // mouseX;
-      float valY_ = height * (0.5f + movuino.ax / 1.0f) ; // mouseY;
-        
-      // float valX_ = mouseX; // width * (0.5f + mouseX / 640.0f) ; // mouseX;
-      // float valY_ = mouseY ; //  height * (0.5f + mouseY / 360.0f) ; // mouseY;
-      
-      timer0 = millis();
-
-      if (valX_ != 0.0 && valY_ != 0.0) {
-        PVector curPos_ = new PVector(valX_, valY_);
-        // PVector lastPos_ = points[_curIndex > 0 ? _curIndex-1 : _maxIndex-1];
-        // if (dist(curPos_.x, curPos_.y, lastPos_.x, lastPos_.y) > 20) {
-        points[_curIndex] = curPos_;
-        _curIndex++;
-        _curIndex = _curIndex % N;
-        _maxIndex = max(_curIndex, _maxIndex);
-        // }
-      }
-    }
+  if (millis()-timer0 > 40) {
+    timer0 = millis();
+    updateShape0();
+    updateShape1();
+    updateShape2();
   }
 
-  // println("------------");
-  if (_maxIndex > 0) {
-    // Compute tangents
-    for (int i = 0; i < _maxIndex; i++) {
-      PVector prevPoint_ = points[i > 0 ? i-1 : _maxIndex-1].copy();
-      PVector nextPoint_ = points[i+1 < _maxIndex ? i+1 : 0].copy();
-      tangents[i] = nextPoint_.sub(prevPoint_);
-    }
+  // Draw shape 0
+  _shape0.drawPoints();
+  _shape0.drawLines();
+  // _shape0.drawBeziers();
+  
+  // Draw shape 1
+  _shape1.drawBeziers();
+  
+  // Draw shape 1
+  _shape2.drawBeziers();
+  // _shape2.drawPoints();
+  // _shape2.drawLines();
+}
 
-    // Draw curves
-    for (int i = 0; i < _maxIndex; i++) {
-      // Points
-      PVector p0_ = points[i].copy();           // first point
-      int j = i+1 < _maxIndex ? i+1 : 0; // index of second point
-      PVector p1_ = points[j].copy();           // second point
+void updateShape0() {
+  _shape0.pushPoint(mouseX, mouseY);
+}
 
-      // Straight paths
-      stroke(255, 0, 0);
-      strokeWeight(1);
-      //line(p0_.x, p0_.y, p1_.x, p1_.y);
+void updateShape1() {
+  // 1 - Get point coordinates
+  float x_ = width * (0.5f + movuino1.ax / 15.0f);
+  float y_ = height * (0.5f + movuino1.ay / 15.0f);
 
-      // Anchor points
-      float mag_ = dist (p0_.x, p0_.y, p1_.x, p1_.y);
-      mag_ /= 2.0f;
+  // 2 - Process point
+  _meanx1.pushData(x_);
+  _meany1.pushData(y_);
 
-      stroke(0, 255, 0);
-      PVector anchor0_ = p0_.copy().add(tangents[i].setMag(mag_));
-      // line(points[i].x, points[i].y, anchor0_.x, anchor0_.y);
+  // 3 - Draw shape
+  _shape1.pushPoint(_meanx1.getSmooth(), _meany1.getSmooth());
+}
 
-      stroke(0, 0, 255);
-      PVector anchor1_ = p1_.copy().sub(tangents[j].setMag(mag_));
-      // line(anchor1_.x, anchor1_.y, points[j].x, points[j].y);
+void updateShape2() {
+  // 1 - Get point coordinates
+  float x_ = width * (0.5f + movuino2.ax / 1.5f);
+  float y_ = height * (0.5f + movuino2.ay / 1.5f);
 
-      // Draw bezier
-      stroke(255);
-      strokeWeight(2);
-      bezier(points[i].x, points[i].y, anchor0_.x, anchor0_.y, anchor1_.x, anchor1_.y, points[j].x, points[j].y);
+  // 2 - Process point
+  _meanx2.pushData(x_);
+  _meany2.pushData(y_);
 
-      strokeWeight(10);
-      // point(points[i].x, points[i].y);
-    }
-  }
+  // 3 - Draw shape
+  _shape2.pushPoint(_meanx2.getSmooth(), _meany2.getSmooth());
 }

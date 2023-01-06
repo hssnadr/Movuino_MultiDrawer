@@ -207,7 +207,7 @@ public class Movuino implements Runnable {
     }
     if (theOscMessage.checkAddrPattern("/streamo")) {
       this.device = "Smartphone";
-      if (theOscMessage.checkTypetag("sfffffffffii")) {
+      if (theOscMessage.checkTypetag("sfffffffff")) {
         this.id = theOscMessage.get(0).stringValue();
         for (int i=0; i<nDat; i++) {
           this.rawData[i] = theOscMessage.get(i+1).floatValue();
