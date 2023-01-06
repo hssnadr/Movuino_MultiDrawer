@@ -1,27 +1,47 @@
 public class MovingMean {
-  private int N = 2;
-  private FloatList dataCollection;
+  private int _N = 2;
+  private FloatList _dataCollection;
+  
+  //---------------------------
+  //------ CONSTRUCTORS -------
+  //---------------------------
+  
+  public MovingMean() {
+    this._dataCollection = new FloatList();
+  }
   
   public MovingMean(int n) {
-    N = n;
-    this.dataCollection = new FloatList();
+    this._N = n;
+    this._dataCollection = new FloatList();
   }
+  
+  //---------------------------
+  //--------- SETTERS ---------
+  //---------------------------
+  
+  public void setSmooth(int n_) {
+    this._N = n_;
+  }
+  
+  //---------------------------
+  //--------- METHODS ---------
+  //---------------------------
   
   public void pushData(float data_){
     // 1 - add new raw value
-    this.dataCollection.append(data_);
+    this._dataCollection.append(data_);
     
-    // 2 - remove older dataCollection from the list
-    while(this.dataCollection.size() > N){
-      this.dataCollection.remove(0);
+    // 2 - remove older _dataCollection from the list
+    while(this._dataCollection.size() > this._N){
+      this._dataCollection.remove(0);
     }
   }
   
   private float getSmooth(){
     int mean_ = 0;
-    for(int i=0; i < this.dataCollection.size(); i++){
-      mean_ += this.dataCollection.get(i);
+    for(int i=0; i < this._dataCollection.size(); i++){
+      mean_ += this._dataCollection.get(i);
     }
-    return mean_ / float(this.dataCollection.size());
+    return mean_ / float(this._dataCollection.size());
   }
 }

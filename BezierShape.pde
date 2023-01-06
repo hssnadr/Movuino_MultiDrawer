@@ -2,7 +2,7 @@ public class BezierShape {
   private int N = 20;
   private PVector points[] = new PVector[N]; // path point
   private PVector tangents[] = new PVector[N]; // (forward) tangent direction for each points
-  private int _curIndex = 0; // N;
+  private int _curIndex = 0;
   private int _maxIndex = 0;
   
   private boolean _isTangent = false;
@@ -22,8 +22,6 @@ public class BezierShape {
   public void pushPoint(float x, float y) {
     if (x != 0.0 && y != 0.0) {
       PVector curPos_ = new PVector(x, y);
-      // PVector lastPos_ = points[_curIndex > 0 ? _curIndex-1 : _maxIndex-1];
-      // if (dist(curPos_.x, curPos_.y, lastPos_.x, lastPos_.y) > 20) {
       points[_curIndex] = curPos_;
       _curIndex++;
       _curIndex = _curIndex % N;

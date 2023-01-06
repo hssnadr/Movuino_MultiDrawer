@@ -40,41 +40,6 @@
 		"assistshowspatchername" : 0,
 		"boxes" : [ 			{
 				"box" : 				{
-					"id" : "obj-16",
-					"maxclass" : "newobj",
-					"numinlets" : 1,
-					"numoutlets" : 10,
-					"outlettype" : [ "", "float", "float", "float", "float", "float", "float", "float", "float", "float" ],
-					"patching_rect" : [ 258.0, 671.0, 386.0, 22.0 ],
-					"text" : "unpack s f f f f f f f f f"
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"id" : "obj-15",
-					"maxclass" : "message",
-					"numinlets" : 2,
-					"numoutlets" : 1,
-					"outlettype" : [ "" ],
-					"patching_rect" : [ 163.0, 671.0, 50.0, 22.0 ]
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"id" : "obj-13",
-					"maxclass" : "newobj",
-					"numinlets" : 1,
-					"numoutlets" : 1,
-					"outlettype" : [ "" ],
-					"patching_rect" : [ 258.0, 614.0, 97.0, 22.0 ],
-					"text" : "udpreceive 7400"
-				}
-
-			}
-, 			{
-				"box" : 				{
 					"id" : "obj-229",
 					"maxclass" : "message",
 					"numinlets" : 2,
@@ -129,7 +94,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 72.517272999999989, 407.40002400000003, 316.0, 53.0 ],
+					"patching_rect" : [ 72.517272999999989, 407.40002400000003, 353.0, 53.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 74.388733000000002, 55.516601999999921, 154.0, 53.0 ],
 					"text" : "Movuino",
@@ -181,7 +146,6 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 408.426331000000005, 121.266632000000001, 66.0, 76.0 ],
-					"presentation_linecount" : 4,
 					"text" : "fontsize 28, fontname Poppins-SemiBold"
 				}
 
@@ -794,29 +758,12 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 519.25964399999998, 121.266632000000001, 92.0, 22.0 ],
-					"text" : "10. 10. 10. 255."
+					"text" : "33. 33. 33. 255."
 				}
 
 			}
  ],
 		"lines" : [ 			{
-				"patchline" : 				{
-					"destination" : [ "obj-15", 1 ],
-					"midpoints" : [ 267.5, 657.0, 203.5, 657.0 ],
-					"order" : 1,
-					"source" : [ "obj-13", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-16", 0 ],
-					"order" : 0,
-					"source" : [ "obj-13", 0 ]
-				}
-
-			}
-, 			{
 				"patchline" : 				{
 					"destination" : [ "obj-145", 0 ],
 					"source" : [ "obj-142", 0 ]
@@ -1248,19 +1195,6 @@
 
 			}
  ],
-		"parameters" : 		{
-			"parameterbanks" : 			{
-				"0" : 				{
-					"index" : 0,
-					"name" : "",
-					"parameters" : [ "-", "-", "-", "-", "-", "-", "-", "-" ]
-				}
-
-			}
-,
-			"inherited_shortname" : 1
-		}
-,
 		"dependency_cache" : [  ],
 		"autosave" : 0
 	}
