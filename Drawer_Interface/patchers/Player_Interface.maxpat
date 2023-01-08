@@ -484,7 +484,6 @@
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
 									"patching_rect" : [ 62.0, 78.299803999999995, 163.0, 22.0 ],
-									"presentation_linecount" : 2,
 									"text" : "uncheckedcolor $1 $2 $3 0.2"
 								}
 
@@ -3402,8 +3401,8 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 683.0, 768.5, 132.0, 22.0 ],
-					"text" : "prepend drawer/mouse"
+					"patching_rect" : [ 683.0, 768.5, 135.0, 22.0 ],
+					"text" : "prepend /drawer/mouse"
 				}
 
 			}
@@ -3467,8 +3466,8 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 1374.5, 768.5, 124.0, 22.0 ],
-					"text" : "prepend drawer/scale"
+					"patching_rect" : [ 1374.5, 768.5, 127.0, 22.0 ],
+					"text" : "prepend /drawer/scale"
 				}
 
 			}
@@ -3515,8 +3514,8 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 1141.5, 768.5, 135.0, 22.0 ],
-					"text" : "prepend drawer/smooth"
+					"patching_rect" : [ 1141.5, 768.5, 139.0, 22.0 ],
+					"text" : "prepend /drawer/smooth"
 				}
 
 			}
@@ -3563,8 +3562,8 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 898.5, 768.5, 129.0, 22.0 ],
-					"text" : "prepend drawer/length"
+					"patching_rect" : [ 898.5, 768.5, 132.0, 22.0 ],
+					"text" : "prepend /drawer/length"
 				}
 
 			}
@@ -3703,19 +3702,20 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 142.726388888882866, -295.0, 184.0, 62.0 ],
-					"text" : "/streamo streamo -0.015869 -0.126634 9.863661 0.085 -0.168 0.156 -0.676234 0.316303 -0.665327"
+					"text" : "/streamo streamo -4.267502 0.980272 8.766207 0.026 -0.033 -0.011 0.658102 -0.482174 -0.578283"
 				}
 
 			}
 , 			{
 				"box" : 				{
 					"id" : "obj-21",
+					"linecount" : 2,
 					"maxclass" : "message",
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 122.0, 547.5, 184.0, 22.0 ],
-					"text" : "/drawer/imu 0.085 -0.168 0.156"
+					"patching_rect" : [ 122.0, 547.5, 184.0, 35.0 ],
+					"text" : "/drawer/imu -4.267502 0.980272 8.766207"
 				}
 
 			}

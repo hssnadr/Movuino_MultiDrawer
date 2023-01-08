@@ -42,6 +42,10 @@ public class OSC implements Runnable {
   //--------- GETTERS ---------
   //---------------------------
 
+  public PVector getPoint() {
+    return this._point;
+  }
+  
   public int getLength() {
     return this._length;
   }
@@ -117,7 +121,7 @@ public class OSC implements Runnable {
       this.device = "Drawer";
       if (theOscMessage.checkTypetag("fff")) {
         for (int i=0; i<nDat; i++) {
-          this.rawData[i] = theOscMessage.get(i+1).floatValue();
+          this.rawData[i] = theOscMessage.get(i).floatValue();
         }
         return;
       }

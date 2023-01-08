@@ -4,15 +4,30 @@ public class BezierShape {
   private PVector tangents[] = new PVector[N]; // (forward) tangent direction for each points
   private int _curIndex = 0;
   private int _maxIndex = 0;
-  
+
   private boolean _isTangent = false;
 
-  public BezierShape() {
+  public BezierShape(int n_) {
+    this.N = n_;
   }
-  
+
+  //---------------------------
+  //--------- SETTERS ---------
+  //---------------------------
+
   public void setLength(int n_) {
-    N = n_;
+    this.N = n_;
+    /*
+    this.points = new PVector[this.N];
+    this.tangents = new PVector[this.N];
+    this._curIndex = 0;
+    this._maxIndex = 0;
+    */
   }
+
+  //---------------------------
+  //--------- METHODS ---------
+  //---------------------------
 
   public void begin() {
     stroke(255);
@@ -33,7 +48,7 @@ public class BezierShape {
     for (int i = 0; i < _maxIndex; i++) {
       strokeWeight(10);
       point(points[i].x, points[i].y);
-      
+
       // symetrical
       point(width - points[i].x, points[i].y);
       point(points[i].x, height - points[i].y);
@@ -50,7 +65,7 @@ public class BezierShape {
 
       strokeWeight(1);
       line(p0_.x, p0_.y, p1_.x, p1_.y);
-      
+
       // symetrical
       line(width - p0_.x, p0_.y, width - p1_.x, p1_.y);
       line(p0_.x, height - p0_.y, p1_.x, height - p1_.y);
@@ -80,8 +95,8 @@ public class BezierShape {
 
         PVector anchor0_ = p0_.copy().add(tangents[i].setMag(mag_));
         PVector anchor1_ = p1_.copy().sub(tangents[j].setMag(mag_));
-        
-        if(_isTangent) {
+
+        if (_isTangent) {
           stroke(0, 255, 0);
           line(points[i].x, points[i].y, anchor0_.x, anchor0_.y);
           stroke(0, 0, 255);
