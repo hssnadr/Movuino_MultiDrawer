@@ -94,7 +94,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 72.517272999999989, 407.40002400000003, 353.0, 53.0 ],
+					"patching_rect" : [ 72.517272999999989, 407.40002400000003, 361.0, 53.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 74.388733000000002, 55.516601999999921, 154.0, 53.0 ],
 					"text" : "Movuino",

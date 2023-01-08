@@ -17,7 +17,7 @@ void callMovuino(String ip_, int portin_, int portout_) {
 //-----------------------------
 public class Movuino implements Runnable {
   float[] rawData; // array list to store each data sent from the Movuino. The size of the list correspond to the size of the moving mean
-  int nDat = 9; // number of data receive from Movuino (example : N = 6 for Acc X, Y, Z and Gyr X, Y, Z) + 1 ID
+  int nDat = 3; // number of data receive from Movuino (example : N = 6 for Acc X, Y, Z and Gyr X, Y, Z) + 1 ID
 
   Thread thread;
   // OSC communication parameters
@@ -29,15 +29,9 @@ public class Movuino implements Runnable {
 
   String device;  // type of device (smartphone or movuino)
   int id;      // id of the device
-  float ax;       // current acceleration X
-  float ay;       // current acceleration Y
-  float az;       // current acceleration Z
-  float gx;       // current gyroscope X
-  float gy;       // current gyroscope Y
-  float gz;       // current gyroscope Z
-  float mx;       // current magnetometer X
-  float my;       // current magnetometer Y
-  float mz;       // current magnetometer Z
+  float ax;
+  float ay;
+  float az;
   
   private int _length = -1;
   private int _smooth = -1;
@@ -94,12 +88,6 @@ public class Movuino implements Runnable {
       this.ax = this.rawData[0];
       this.ay = this.rawData[1];
       this.az = this.rawData[2];
-      this.gx = this.rawData[3];
-      this.gy = this.rawData[4];
-      this.gz = this.rawData[5];
-      this.mx = this.rawData[6];
-      this.my = this.rawData[7];
-      this.mz = this.rawData[8];
 
       delay(5); // regulation
     }
@@ -116,9 +104,7 @@ public class Movuino implements Runnable {
   void printInfo() {
     println("Device:", this.device);
     println("ID:", this.id);
-    println("Accelerometer:", this.ax, this.ay, this.az);
-    println("Gyroscope:", this.gx, this.gy, this.gz);
-    println("Magnetometer:", this.mx, this.my, this.mz);
+    println("Data flow:", this.ax, this.ay, this.az);
     println("-------------------------");
   }
 
@@ -217,7 +203,7 @@ public class Movuino implements Runnable {
     }
     if (theOscMessage.checkAddrPattern("/drawer/imu")) {
       this.device = "Drawer";
-      if (theOscMessage.checkTypetag("fffffffff")) {
+      if (theOscMessage.checkTypetag("fff")) {
         for (int i=0; i<nDat; i++) {
           this.rawData[i] = theOscMessage.get(i+1).floatValue();
         }
