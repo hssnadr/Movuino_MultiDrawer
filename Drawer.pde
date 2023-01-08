@@ -10,8 +10,8 @@ public class Drawer {
   private boolean _isPoints = false;
 
   // Sensor
-  private Movuino _movuino;
-  private Thread _movuinoThread;
+  private OSC _movuino;
+  private Thread _oscThreadThread;
   private String _ip = "127.0.0.1";
   private int _portIn = 3400;
   private int _portOut = 3401;
@@ -51,9 +51,9 @@ public class Drawer {
 
   public void begin() {
     if (!isMouse) {
-      this._movuino = new Movuino(this._ip, this._portIn, this._portOut);
-      this._movuinoThread = new Thread(this._movuino);
-      this._movuinoThread.start();
+      this._movuino = new OSC(this._ip, this._portIn, this._portOut);
+      this._oscThreadThread = new Thread(this._movuino);
+      this._oscThreadThread.start();
       this._movuino.printRawDataCollect();
     }
     this._timer0 = millis();
