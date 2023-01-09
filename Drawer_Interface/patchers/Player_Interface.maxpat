@@ -40,6 +40,78 @@
 		"assistshowspatchername" : 0,
 		"boxes" : [ 			{
 				"box" : 				{
+					"id" : "obj-22",
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 831.413811728388737, -440.0, 111.0, 20.0 ],
+					"text" : "outcoming port"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-20",
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 428.413811728388737, -440.0, 111.0, 20.0 ],
+					"text" : "incoming port"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-11",
+					"maxclass" : "message",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 759.242129629627698, -442.0, 46.0, 22.0 ],
+					"text" : "port $1"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"comment" : "",
+					"id" : "obj-13",
+					"index" : 2,
+					"maxclass" : "inlet",
+					"numinlets" : 0,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 759.242129629627698, -490.40002400000003, 30.0, 30.0 ]
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-9",
+					"maxclass" : "message",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 351.242129629627641, -442.0, 46.0, 22.0 ],
+					"text" : "port $1"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"comment" : "",
+					"id" : "obj-1",
+					"index" : 1,
+					"maxclass" : "inlet",
+					"numinlets" : 0,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 351.242129629627641, -490.40002400000003, 30.0, 30.0 ]
+				}
+
+			}
+, 			{
+				"box" : 				{
 					"format" : 6,
 					"id" : "obj-93",
 					"maxclass" : "flonum",
@@ -4003,36 +4075,20 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 351.242129629627641, -401.0, 97.0, 22.0 ],
-					"text" : "udpreceive 7400"
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"id" : "obj-2",
-					"maxclass" : "newobj",
-					"numinlets" : 0,
-					"numoutlets" : 1,
-					"outlettype" : [ "" ],
-					"patching_rect" : [ -159.0, -532.0, 53.0, 22.0 ],
-					"text" : "r neutral"
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"id" : "obj-1",
-					"maxclass" : "newobj",
-					"numinlets" : 4,
-					"numoutlets" : 0,
-					"patching_rect" : [ -159.0, -493.0, 50.5, 22.0 ],
-					"text" : "bgcolor"
+					"patching_rect" : [ 351.242129629627641, -401.0, 67.0, 22.0 ],
+					"text" : "udpreceive"
 				}
 
 			}
  ],
 		"lines" : [ 			{
+				"patchline" : 				{
+					"destination" : [ "obj-9", 0 ],
+					"source" : [ "obj-1", 0 ]
+				}
+
+			}
+, 			{
 				"patchline" : 				{
 					"destination" : [ "obj-21", 1 ],
 					"midpoints" : [ 332.550617283947304, 513.5, 297.5, 513.5 ],
@@ -4051,8 +4107,23 @@
 			}
 , 			{
 				"patchline" : 				{
+					"destination" : [ "obj-6", 0 ],
+					"midpoints" : [ 768.742129629627698, 184.0, 504.0, 184.0, 504.0, 1015.0, 332.550617283947304, 1015.0 ],
+					"source" : [ "obj-11", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-252", 0 ],
 					"source" : [ "obj-12", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-11", 0 ],
+					"source" : [ "obj-13", 0 ]
 				}
 
 			}
@@ -4089,13 +4160,6 @@
 					"destination" : [ "obj-6", 0 ],
 					"midpoints" : [ 1227.0, 944.0, 332.550617283947304, 944.0 ],
 					"source" : [ "obj-19", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-1", 0 ],
-					"source" : [ "obj-2", 0 ]
 				}
 
 			}
@@ -4782,6 +4846,13 @@
 			}
 , 			{
 				"patchline" : 				{
+					"destination" : [ "obj-5", 0 ],
+					"source" : [ "obj-9", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-42", 0 ],
 					"midpoints" : [ 1479.5, 459.0, 1545.0, 459.0 ],
 					"source" : [ "obj-90", 0 ]
@@ -4803,30 +4874,13 @@
 
 			}
  ],
-		"parameters" : 		{
-			"obj-35" : [ "slider", "slider", 0 ],
-			"parameterbanks" : 			{
-				"0" : 				{
-					"index" : 0,
-					"name" : "",
-					"parameters" : [ "-", "-", "-", "-", "-", "-", "-", "-" ]
-				}
-
-			}
-,
-			"inherited_shortname" : 1
-		}
-,
-		"dependency_cache" : [ 			{
-				"name" : "MovingMean.js",
-				"bootpath" : "~/Documents/GitHub/Movuino_MultiDrawer/Drawer_Interface/code",
-				"patcherrelativepath" : "../code",
-				"type" : "TEXT",
-				"implicit" : 1
-			}
- ],
-		"autosave" : 0,
-		"bgcolor" : [ 0.129411764705882, 0.129411764705882, 0.129411764705882, 1.0 ]
+		"default_bgcolor" : [ 0.2, 0.2, 0.2, 1.0 ],
+		"bgcolor" : [ 0.796078431372549, 0.796078431372549, 0.796078431372549, 1.0 ],
+		"stripecolor" : [ 0.243137, 0.243137, 0.243137, 1.0 ],
+		"bgfillcolor_type" : "gradient",
+		"bgfillcolor_color1" : [ 0.301961, 0.301961, 0.301961, 1 ],
+		"bgfillcolor_color2" : [ 0.2, 0.2, 0.2, 1 ],
+		"bgfillcolor_color" : [ 0.2, 0.2, 0.2, 1 ]
 	}
 
 }
