@@ -4,7 +4,7 @@ public class Drawer {
   private float _maxRatio = 30;
   private float _scale = 1.0f;
   private boolean _isBeziers = true;
-  private boolean _isLines = false;
+  private boolean _isLines = true;
   private boolean _isPoints = false;
 
   // Sensor
@@ -75,16 +75,19 @@ public class Drawer {
       //---------------------------------
 
       if (this._isOSC) {
-        this._shape.setLength(this._osc.getLength() != -1 ? this._osc.getLength() : 20); // TO FIX
+        this._shape.setLength(this._osc.getLength() != -1 ? this._osc.getLength() : 20);
         this._meanX.setSmooth(this._osc.getSmooth() != -1 ? this._osc.getSmooth() : 1);
         this._meanY.setSmooth(this._osc.getSmooth() != -1 ? this._osc.getSmooth() : 1);
         this._scale = this._osc.getScale() != -1f ? this._osc.getScale() : this._scale;
         this._isMouse = this._osc.isMouse();
+        
+        this._shape.setHorizontalSym(this._osc.isSymH());
+        this._shape.setVerticalSym(this._osc.isSymV());
 
         // display mode
-        // this._isBeziers = true;
-        // this._isLines = false;
-        // this._isPoints = false;
+        this._isPoints = this._osc.isPoints();
+        this._isLines = this._osc.isLines();
+        this._isBeziers = this._osc.isCurves();
       }
 
       //---------------------------------

@@ -22,6 +22,11 @@ public class OSC implements Runnable {
   private int _smooth = -1;
   private float _scale = -1f;
   private boolean _isMouse = false;
+  private boolean _isSymH = false;
+  private boolean _isSymV = false;
+  private boolean _isPoints = false;
+  private boolean _isLines = false;
+  private boolean _isCurves = false;
 
   int red = 255;   // red component for neopixel color
   int green = 255; // green component for neopixel color
@@ -45,7 +50,7 @@ public class OSC implements Runnable {
   public PVector getPoint() {
     return this._point;
   }
-  
+
   public int getLength() {
     return this._length;
   }
@@ -60,6 +65,26 @@ public class OSC implements Runnable {
 
   public boolean isMouse() {
     return this._isMouse;
+  }
+  
+  public boolean isSymH() {
+    return this._isSymH;
+  }
+  
+  public boolean isSymV() {
+    return this._isSymV;
+  }
+  
+  public boolean isPoints() {
+    return this._isPoints;
+  }
+  
+  public boolean isLines() {
+    return this._isLines;
+  }
+
+  public boolean isCurves() {
+    return this._isCurves;
   }
 
   //---------------------------
@@ -151,6 +176,41 @@ public class OSC implements Runnable {
       this.device = "Drawer";
       if (theOscMessage.checkTypetag("i")) {
         this._isMouse = theOscMessage.get(0).intValue() != 0 ? true : false;
+        return;
+      }
+    }
+    if (theOscMessage.checkAddrPattern("/drawer/symH")) {
+      this.device = "Drawer";
+      if (theOscMessage.checkTypetag("i")) {
+        this._isSymH = theOscMessage.get(0).intValue() != 0 ? true : false;
+        return;
+      }
+    }
+    if (theOscMessage.checkAddrPattern("/drawer/symV")) {
+      this.device = "Drawer";
+      if (theOscMessage.checkTypetag("i")) {
+        this._isSymV = theOscMessage.get(0).intValue() != 0 ? true : false;
+        return;
+      }
+    }
+    if (theOscMessage.checkAddrPattern("/drawer/points")) {
+      this.device = "Drawer";
+      if (theOscMessage.checkTypetag("i")) {
+        this._isPoints = theOscMessage.get(0).intValue() != 0 ? true : false;
+        return;
+      }
+    }
+    if (theOscMessage.checkAddrPattern("/drawer/lines")) {
+      this.device = "Drawer";
+      if (theOscMessage.checkTypetag("i")) {
+        this._isLines = theOscMessage.get(0).intValue() != 0 ? true : false;
+        return;
+      }
+    }
+    if (theOscMessage.checkAddrPattern("/drawer/curves")) {
+      this.device = "Drawer";
+      if (theOscMessage.checkTypetag("i")) {
+        this._isCurves = theOscMessage.get(0).intValue() != 0 ? true : false;
         return;
       }
     }

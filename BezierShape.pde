@@ -2,8 +2,10 @@ public class BezierShape {
   private int _N = 20;
   private ArrayList<PVector> _points = new ArrayList<>();
   private ArrayList<PVector> _tangents = new ArrayList<>();
+  private boolean _isSymH = false;
+  private boolean _isSymV = false;
 
-  private boolean _isTangent = false;
+  private boolean _isTangent = false; // not used
 
   public BezierShape(int n_) {
     this._N = n_;
@@ -15,6 +17,14 @@ public class BezierShape {
 
   public void setLength(int n_) {
     this._N = n_;
+  }
+
+  public void setHorizontalSym(boolean isSymH_) {
+    this._isSymH = isSymH_;
+  }
+
+  public void setVerticalSym(boolean isSymV_) {
+    this._isSymV = isSymV_;
   }
 
   //---------------------------
@@ -46,9 +56,15 @@ public class BezierShape {
       point(this._points.get(i).x, this._points.get(i).y);
 
       // symetrical
-      point(width - this._points.get(i).x, this._points.get(i).y);
-      point(this._points.get(i).x, height - this._points.get(i).y);
-      point(width - this._points.get(i).x, height - this._points.get(i).y);
+      if (this._isSymH) {
+        point(width - this._points.get(i).x, this._points.get(i).y);
+      }
+      if (this._isSymV) {
+        point(this._points.get(i).x, height - this._points.get(i).y);
+        if (this._isSymH) {
+          point(width - this._points.get(i).x, height - this._points.get(i).y);
+        }
+      }
     }
   }
 
@@ -63,9 +79,15 @@ public class BezierShape {
       line(p0_.x, p0_.y, p1_.x, p1_.y);
 
       // symetrical
-      line(width - p0_.x, p0_.y, width - p1_.x, p1_.y);
-      line(p0_.x, height - p0_.y, p1_.x, height - p1_.y);
-      line(width - p0_.x, height - p0_.y, width - p1_.x, height - p1_.y);
+      if (this._isSymH) {
+        line(width - p0_.x, p0_.y, width - p1_.x, p1_.y);
+      }
+      if (this._isSymV) {
+        line(p0_.x, height - p0_.y, p1_.x, height - p1_.y);
+        if (this._isSymH) {
+          line(width - p0_.x, height - p0_.y, width - p1_.x, height - p1_.y);
+        }
+      }
     }
   }
 
@@ -103,13 +125,19 @@ public class BezierShape {
         // Draw bezier
         stroke(255);
         strokeWeight(2);
-        fill(255);
+        // fill(255);
         bezier(this._points.get(i).x, this._points.get(i).y, anchor0_.x, anchor0_.y, anchor1_.x, anchor1_.y, this._points.get(j).x, this._points.get(j).y);
 
         // symetrical
-        bezier(width - this._points.get(i).x, this._points.get(i).y, width - anchor0_.x, anchor0_.y, width - anchor1_.x, anchor1_.y, width - this._points.get(j).x, this._points.get(j).y);
-        bezier(this._points.get(i).x, height - this._points.get(i).y, anchor0_.x, height - anchor0_.y, anchor1_.x, height - anchor1_.y, this._points.get(j).x, height - this._points.get(j).y);
-        bezier(width - this._points.get(i).x, height - this._points.get(i).y, width - anchor0_.x, height - anchor0_.y, width - anchor1_.x, height - anchor1_.y, width - this._points.get(j).x, height - this._points.get(j).y);
+        if (this._isSymH) {
+          bezier(width - this._points.get(i).x, this._points.get(i).y, width - anchor0_.x, anchor0_.y, width - anchor1_.x, anchor1_.y, width - this._points.get(j).x, this._points.get(j).y);
+        }
+        if (this._isSymV) {
+          bezier(this._points.get(i).x, height - this._points.get(i).y, anchor0_.x, height - anchor0_.y, anchor1_.x, height - anchor1_.y, this._points.get(j).x, height - this._points.get(j).y);
+          if (this._isSymH) {
+            bezier(width - this._points.get(i).x, height - this._points.get(i).y, width - anchor0_.x, height - anchor0_.y, width - anchor1_.x, height - anchor1_.y, width - this._points.get(j).x, height - this._points.get(j).y);
+          }
+        }
       }
     }
   }
