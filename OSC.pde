@@ -21,6 +21,8 @@ public class OSC implements Runnable {
   private int _length = -1;
   private int _smooth = -1;
   private float _scale = -1f;
+  private float _pointSize = -1f;
+  private float _strokeWeight = -1f;
   private boolean _isMouse = false;
   private boolean _isSymH = false;
   private boolean _isSymV = false;
@@ -61,6 +63,14 @@ public class OSC implements Runnable {
 
   public float getScale() {
     return this._scale;
+  }
+  
+  public float getPointSize() {
+    return this._pointSize;
+  }
+  
+  public float getStrokeWeight() {
+    return this._strokeWeight;
   }
 
   public boolean isMouse() {
@@ -169,6 +179,20 @@ public class OSC implements Runnable {
       this.device = "Drawer";
       if (theOscMessage.checkTypetag("f")) {
         this._scale = theOscMessage.get(0).floatValue();
+        return;
+      }
+    }
+    if (theOscMessage.checkAddrPattern("/drawer/pointS")) {
+      this.device = "Drawer";
+      if (theOscMessage.checkTypetag("f")) {
+        this._pointSize = theOscMessage.get(0).floatValue(); /// ----------------------
+        return;
+      }
+    }
+    if (theOscMessage.checkAddrPattern("/drawer/strokeW")) {
+      this.device = "Drawer";
+      if (theOscMessage.checkTypetag("f")) {
+        this._strokeWeight = theOscMessage.get(0).floatValue();
         return;
       }
     }

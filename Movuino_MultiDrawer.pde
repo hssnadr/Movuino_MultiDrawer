@@ -21,6 +21,7 @@ void setup() {
 
 void draw() {
   background(51);
+
   drawer0.update();
   drawer1.update();
   // drawer2.update();

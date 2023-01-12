@@ -3,6 +3,8 @@ public class Drawer {
   private boolean _isMouse = false;
   private float _maxRatio = 30;
   private float _scale = 1.0f;
+  private float _pointSize = 1.0f;
+  private float _strokeWeight = 1.0f;
   private boolean _isBeziers = true;
   private boolean _isLines = true;
   private boolean _isPoints = false;
@@ -75,12 +77,18 @@ public class Drawer {
       //---------------------------------
 
       if (this._isOSC) {
+        // data points
         this._shape.setLength(this._osc.getLength() != -1 ? this._osc.getLength() : 20);
         this._meanX.setSmooth(this._osc.getSmooth() != -1 ? this._osc.getSmooth() : 1);
         this._meanY.setSmooth(this._osc.getSmooth() != -1 ? this._osc.getSmooth() : 1);
+        
+        // render
         this._scale = this._osc.getScale() != -1f ? this._osc.getScale() : this._scale;
         this._isMouse = this._osc.isMouse();
         
+        // shape
+        this._shape.setPointSize(this._osc.getPointSize() != -1f ? this._osc.getPointSize() : this._pointSize);
+        this._shape.setStrokeWeight(this._osc.getStrokeWeight() != -1f ? this._osc.getStrokeWeight() : this._strokeWeight);
         this._shape.setHorizontalSym(this._osc.isSymH());
         this._shape.setVerticalSym(this._osc.isSymV());
 

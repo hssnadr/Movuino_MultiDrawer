@@ -9,8 +9,7 @@ public class BezierShape {
   private float _pointSize = 10f;
   private float _strokeWeight = 2f;
   private color _strokeColor = #FFFFFF;
-  private color _fillColor = #AAAAAA;
-
+  private color _fillColor = 72;
 
   private boolean _isTangent = false; // for debug
 
@@ -32,6 +31,14 @@ public class BezierShape {
 
   public void setVerticalSym(boolean isSymV_) {
     this._isSymV = isSymV_;
+  }
+  
+  public void setPointSize(float pointS_) {
+    this._pointSize = pointS_;
+  }
+  
+  public void setStrokeWeight(float strokeW_) {
+    this._strokeWeight = strokeW_;
   }
 
   //---------------------------
