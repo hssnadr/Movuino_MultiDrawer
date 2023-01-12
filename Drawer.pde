@@ -91,6 +91,11 @@ public class Drawer {
         this._shape.setStrokeWeight(this._osc.getStrokeWeight() != -1f ? this._osc.getStrokeWeight() : this._strokeWeight);
         this._shape.setHorizontalSym(this._osc.isSymH());
         this._shape.setVerticalSym(this._osc.isSymV());
+        
+        // colors
+        this._shape.setPointColor(this._osc.getPointColor());
+        this._shape.setStrokeColor(this._osc.getStrokeColor());
+        this._shape.setFillColor(this._osc.getFillColor());
 
         // display mode
         this._isPoints = this._osc.isPoints();

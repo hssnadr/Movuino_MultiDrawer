@@ -29,7 +29,11 @@ public class OSC implements Runnable {
   private boolean _isPoints = false;
   private boolean _isLines = false;
   private boolean _isCurves = false;
+  private color _strokeC = -1;
+  private color _fillC = -1;
+  private color _pointC = -1;
 
+  // neopixel movuino
   int red = 255;   // red component for neopixel color
   int green = 255; // green component for neopixel color
   int blue = 255;  // blue component for neopixel color
@@ -64,11 +68,11 @@ public class OSC implements Runnable {
   public float getScale() {
     return this._scale;
   }
-  
+
   public float getPointSize() {
     return this._pointSize;
   }
-  
+
   public float getStrokeWeight() {
     return this._strokeWeight;
   }
@@ -76,25 +80,37 @@ public class OSC implements Runnable {
   public boolean isMouse() {
     return this._isMouse;
   }
-  
+
   public boolean isSymH() {
     return this._isSymH;
   }
-  
+
   public boolean isSymV() {
     return this._isSymV;
   }
-  
+
   public boolean isPoints() {
     return this._isPoints;
   }
-  
+
   public boolean isLines() {
     return this._isLines;
   }
 
   public boolean isCurves() {
     return this._isCurves;
+  }
+
+  public color getPointColor() {
+    return this._pointC;
+  }
+
+  public color getStrokeColor() {
+    return this._strokeC;
+  }
+  
+  public color getFillColor() {
+    return this._fillC;
   }
 
   //---------------------------
@@ -185,7 +201,7 @@ public class OSC implements Runnable {
     if (theOscMessage.checkAddrPattern("/drawer/pointS")) {
       this.device = "Drawer";
       if (theOscMessage.checkTypetag("i")) {
-        this._pointSize = theOscMessage.get(0).intValue(); /// ----------------------
+        this._pointSize = theOscMessage.get(0).intValue();
         return;
       }
     }
@@ -235,6 +251,45 @@ public class OSC implements Runnable {
       this.device = "Drawer";
       if (theOscMessage.checkTypetag("i")) {
         this._isCurves = theOscMessage.get(0).intValue() != 0 ? true : false;
+        return;
+      }
+    }
+    if (theOscMessage.checkAddrPattern("/drawer/pointC")) {
+      this.device = "Drawer";
+      println("OSC receive stroke color"); 
+      if (theOscMessage.checkTypetag("ffff")) {
+        int r_ = int(255.0 * theOscMessage.get(0).floatValue());
+        int g_ = int(255.0 * theOscMessage.get(1).floatValue());
+        int b_ = int(255.0 * theOscMessage.get(2).floatValue());
+        int a_ = int(255.0 * theOscMessage.get(3).floatValue());
+        this._pointC = color(r_,g_,b_,a_);
+        println(this._pointC);
+        return;
+      }
+    }
+    if (theOscMessage.checkAddrPattern("/drawer/strokeC")) {
+      this.device = "Drawer";
+      println("OSC receive stroke color"); 
+      if (theOscMessage.checkTypetag("ffff")) {
+        int r_ = int(255.0 * theOscMessage.get(0).floatValue());
+        int g_ = int(255.0 * theOscMessage.get(1).floatValue());
+        int b_ = int(255.0 * theOscMessage.get(2).floatValue());
+        int a_ = int(255.0 * theOscMessage.get(3).floatValue());
+        this._strokeC = color(r_,g_,b_,a_);
+        println(this._strokeC);
+        return;
+      }
+    }
+    if (theOscMessage.checkAddrPattern("/drawer/fillC")) {
+      this.device = "Drawer";
+      println("OSC receive stroke color"); 
+      if (theOscMessage.checkTypetag("ffff")) {
+        int r_ = int(255.0 * theOscMessage.get(0).floatValue());
+        int g_ = int(255.0 * theOscMessage.get(1).floatValue());  /// ----------------------
+        int b_ = int(255.0 * theOscMessage.get(2).floatValue());
+        int a_ = int(255.0 * theOscMessage.get(3).floatValue());
+        this._fillC = color(r_,g_,b_,a_);
+        println(this._strokeC);
         return;
       }
     }

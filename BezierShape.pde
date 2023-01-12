@@ -7,6 +7,7 @@ public class BezierShape {
 
   // style
   private float _pointSize = 10f;
+  private color _pointColor = #FFFFFF;
   private float _strokeWeight = 2f;
   private color _strokeColor = #FFFFFF;
   private color _fillColor = 72;
@@ -40,6 +41,18 @@ public class BezierShape {
   public void setStrokeWeight(float strokeW_) {
     this._strokeWeight = strokeW_;
   }
+  
+  public void setStrokeColor(color strokeC_) {
+    this._strokeColor = strokeC_ != -1 ? strokeC_ : this._strokeColor;
+  }
+  
+  public void setFillColor(color fillC_) {
+    this._fillColor = fillC_ != -1 ? fillC_ : this._fillColor;
+  }
+  
+  public void setPointColor(color pointC_) {
+    this._pointColor = pointC_ != -1 ? pointC_ : this._pointColor;
+  }
 
   //---------------------------
   //--------- METHODS ---------
@@ -62,7 +75,7 @@ public class BezierShape {
   public void drawPoints() {
     // 1 - style points
     strokeWeight(this._pointSize);
-    stroke(this._strokeColor);
+    stroke(this._pointColor);
 
     // 2 - draw points
     for (int i = 0; i < this._points.size(); i++) {
@@ -86,6 +99,8 @@ public class BezierShape {
     strokeWeight(this._strokeWeight);
     stroke(this._strokeColor);
     fill(this._fillColor);
+    
+    println(this._strokeColor);
 
     // 2 - draw lines
     for (int i = 0; i < this._points.size(); i++) {
