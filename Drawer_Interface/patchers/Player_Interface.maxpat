@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 34.0, 100.0, 1444.0, 848.0 ],
+		"rect" : [ 34.0, 100.0, 1001.0, 848.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 1,
 		"default_fontsize" : 12.0,
@@ -425,6 +425,8 @@
 					"fontsize" : 18.0,
 					"id" : "obj-127",
 					"maxclass" : "number",
+					"maximum" : 100,
+					"minimum" : 1,
 					"numinlets" : 1,
 					"numoutlets" : 2,
 					"outlettype" : [ "", "bang" ],
@@ -433,7 +435,8 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 293.388733000000002, 825.600097999999889, 62.0, 34.0 ],
 					"textcolor" : [ 0.823529411764706, 0.286274509803922, 0.313725490196078, 1.0 ],
-					"tricolor" : [ 1.0, 1.0, 1.0, 0.0 ]
+					"tricolor" : [ 1.0, 1.0, 1.0, 0.0 ],
+					"varname" : "number"
 				}
 
 			}
@@ -762,6 +765,8 @@
 					"fontsize" : 18.0,
 					"id" : "obj-26",
 					"maxclass" : "number",
+					"maximum" : 100,
+					"minimum" : 1,
 					"numinlets" : 1,
 					"numoutlets" : 2,
 					"outlettype" : [ "", "bang" ],
@@ -770,7 +775,8 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 293.388733000000002, 903.600097999999889, 62.0, 34.0 ],
 					"textcolor" : [ 0.823529411764706, 0.286274509803922, 0.313725490196078, 1.0 ],
-					"tricolor" : [ 1.0, 1.0, 1.0, 0.0 ]
+					"tricolor" : [ 1.0, 1.0, 1.0, 0.0 ],
+					"varname" : "number[1]"
 				}
 
 			}
@@ -3136,6 +3142,8 @@
 					"fontsize" : 18.0,
 					"id" : "obj-23",
 					"maxclass" : "number",
+					"maximum" : 100,
+					"minimum" : 0,
 					"numinlets" : 1,
 					"numoutlets" : 2,
 					"outlettype" : [ "", "bang" ],

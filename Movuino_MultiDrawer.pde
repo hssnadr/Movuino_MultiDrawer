@@ -27,7 +27,7 @@ void draw() {
   // drawer2.update();
   // drawer3.update();
 
-  drawer0.draw();
+  // drawer0.draw();
   drawer1.draw();
   // drawer2.draw();
   // drawer3.draw();

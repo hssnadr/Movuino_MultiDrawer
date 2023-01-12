@@ -184,15 +184,15 @@ public class OSC implements Runnable {
     }
     if (theOscMessage.checkAddrPattern("/drawer/pointS")) {
       this.device = "Drawer";
-      if (theOscMessage.checkTypetag("f")) {
-        this._pointSize = theOscMessage.get(0).floatValue(); /// ----------------------
+      if (theOscMessage.checkTypetag("i")) {
+        this._pointSize = theOscMessage.get(0).intValue(); /// ----------------------
         return;
       }
     }
     if (theOscMessage.checkAddrPattern("/drawer/strokeW")) {
       this.device = "Drawer";
-      if (theOscMessage.checkTypetag("f")) {
-        this._strokeWeight = theOscMessage.get(0).floatValue();
+      if (theOscMessage.checkTypetag("i")) {
+        this._strokeWeight = theOscMessage.get(0).intValue();
         return;
       }
     }
