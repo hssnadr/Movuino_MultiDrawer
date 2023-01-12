@@ -5,7 +5,14 @@ public class BezierShape {
   private boolean _isSymH = false;
   private boolean _isSymV = false;
 
-  private boolean _isTangent = false; // not used
+  // style
+  private float _pointSize = 10f;
+  private float _strokeWeight = 2f;
+  private color _strokeColor = #FFFFFF;
+  private color _fillColor = #AAAAAA;
+
+
+  private boolean _isTangent = false; // for debug
 
   public BezierShape(int n_) {
     this._N = n_;
@@ -31,11 +38,6 @@ public class BezierShape {
   //--------- METHODS ---------
   //---------------------------
 
-  public void begin() {
-    stroke(255);
-    strokeWeight(4);
-  }
-
   public void pushPoint(float x, float y) {
     if (x != 0.0 && y != 0.0) { // avoid first point
       // 1 - add new values
@@ -51,8 +53,12 @@ public class BezierShape {
   }
 
   public void drawPoints() {
+    // 1 - style points
+    strokeWeight(this._pointSize);
+    stroke(this._strokeColor);
+
+    // 2 - draw points
     for (int i = 0; i < this._points.size(); i++) {
-      strokeWeight(10);
       point(this._points.get(i).x, this._points.get(i).y);
 
       // symetrical
@@ -69,13 +75,18 @@ public class BezierShape {
   }
 
   public void drawLines() {
+    // 1 - style lines
+    strokeWeight(this._strokeWeight);
+    stroke(this._strokeColor);
+    fill(this._fillColor);
+
+    // 2 - draw lines
     for (int i = 0; i < this._points.size(); i++) {
       // Points
       PVector p0_ = this._points.get(i).copy();           // first point
       int j = i+1 < this._points.size() ? i+1 : 0; // index of second point
       PVector p1_ = this._points.get(j).copy();           // second point
 
-      strokeWeight(1);
       line(p0_.x, p0_.y, p1_.x, p1_.y);
 
       // symetrical
@@ -92,6 +103,12 @@ public class BezierShape {
   }
 
   public void drawBeziers() {
+    // 1 - style beziers
+    strokeWeight(this._strokeWeight);
+    stroke(this._strokeColor);
+    fill(this._fillColor);
+
+    // 2 - draw beziers
     if (this._points.size() > 0) {
       // Compute tangents
       this._tangents = new ArrayList<>(); // reset (use .removeAll() ?)
@@ -115,6 +132,7 @@ public class BezierShape {
         PVector anchor0_ = p0_.copy().add(this._tangents.get(i).setMag(mag_));
         PVector anchor1_ = p1_.copy().sub(this._tangents.get(j).setMag(mag_));
 
+        // for debug only
         if (_isTangent) {
           stroke(0, 255, 0);
           line(this._points.get(i).x, this._points.get(i).y, anchor0_.x, anchor0_.y);
@@ -123,9 +141,6 @@ public class BezierShape {
         }
 
         // Draw bezier
-        stroke(255);
-        strokeWeight(2);
-        // fill(255);
         bezier(this._points.get(i).x, this._points.get(i).y, anchor0_.x, anchor0_.y, anchor1_.x, anchor1_.y, this._points.get(j).x, this._points.get(j).y);
 
         // symetrical
