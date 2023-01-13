@@ -24,6 +24,18 @@ public class MovingMean {
   }
   
   //---------------------------
+  //--------- GETTERS ---------
+  //---------------------------
+  
+  public float getSmooth(){
+    int mean_ = 0;
+    for(int i=0; i < this._dataCollection.size(); i++){
+      mean_ += this._dataCollection.get(i);
+    }
+    return mean_ / float(this._dataCollection.size());
+  }
+  
+  //---------------------------
   //--------- METHODS ---------
   //---------------------------
   
@@ -35,13 +47,5 @@ public class MovingMean {
     while(this._dataCollection.size() > this._N){
       this._dataCollection.remove(0);
     }
-  }
-  
-  private float getSmooth(){
-    int mean_ = 0;
-    for(int i=0; i < this._dataCollection.size(); i++){
-      mean_ += this._dataCollection.get(i);
-    }
-    return mean_ / float(this._dataCollection.size());
   }
 }

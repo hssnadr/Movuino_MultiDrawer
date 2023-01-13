@@ -6,8 +6,8 @@ public class Drawer {
   private float _pointSize = 1.0f;
   private float _strokeWeight = 1.0f;
   private boolean _isBeziers = true;
-  private boolean _isLines = true;
-  private boolean _isPoints = false;
+  private boolean _isLines = false;
+  private boolean _isPoints = true;
 
   // Sensor
   private boolean _isOSC = false;
@@ -20,7 +20,7 @@ public class Drawer {
   // Moving mean
   private MovingMean _meanX = new MovingMean(1);
   private MovingMean _meanY = new MovingMean(1);
-  private BezierShape _shape = new BezierShape(20);
+  private Shape _shape = new Shape(20);
 
   // Extra
   private long _timer0;
@@ -71,6 +71,7 @@ public class Drawer {
   }
 
   public void update() {
+    this._shape.update();
     if (millis() - this._timer0 > 40) {
       //---------------------------------
       //---------- UPDATE OSC -----------
@@ -81,17 +82,17 @@ public class Drawer {
         this._shape.setLength(this._osc.getLength() != -1 ? this._osc.getLength() : 20);
         this._meanX.setSmooth(this._osc.getSmooth() != -1 ? this._osc.getSmooth() : 1);
         this._meanY.setSmooth(this._osc.getSmooth() != -1 ? this._osc.getSmooth() : 1);
-        
+
         // render
         this._scale = this._osc.getScale() != -1f ? this._osc.getScale() : this._scale;
         this._isMouse = this._osc.isMouse();
-        
+
         // shape
         this._shape.setPointSize(this._osc.getPointSize() != -1f ? this._osc.getPointSize() : this._pointSize);
         this._shape.setStrokeWeight(this._osc.getStrokeWeight() != -1f ? this._osc.getStrokeWeight() : this._strokeWeight);
         this._shape.setHorizontalSym(this._osc.isSymH());
         this._shape.setVerticalSym(this._osc.isSymV());
-        
+
         // colors
         this._shape.setPointColor(this._osc.getPointColor());
         this._shape.setStrokeColor(this._osc.getStrokeColor());
@@ -121,16 +122,30 @@ public class Drawer {
         y_ = height * (0.5f + this._osc.getPoint().y * ratio_);
       }
 
-      // 2 - Process point
-      this._meanX.pushData(x_);
-      this._meanY.pushData(y_);
-
-      // 3 - push value to shape
-      this._shape.pushPoint(this._meanX.getSmooth(), this._meanY.getSmooth());
+      // println(dist(x_, y_, this._meanX.getSmooth(), this._meanY.getSmooth()));
+      if (Float.isNaN(this._meanX.getSmooth()) && Float.isNaN(this._meanY.getSmooth())) {
+        pushPoint(x_, y_);
+      } else {
+        if (dist(x_, y_, this._meanX.getSmooth(), this._meanY.getSmooth()) > 10) {
+          pushPoint(x_, y_);
+        }
+      }
     }
   }
 
+  private void pushPoint(float x_, float y_) {
+    // 1 - Process point
+    this._meanX.pushData(x_);
+    this._meanY.pushData(y_);
+
+    // 2 - push value to shape
+    this._shape.pushPoint(this._meanX.getSmooth(), this._meanY.getSmooth());
+  }
+
   public void draw() {
+    // if (this._isBeziers)
+    // this._shape.drawCurveShape();
+
     if (this._isBeziers)
       this._shape.drawBeziers();
     if (this._isLines)

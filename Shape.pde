@@ -1,6 +1,6 @@
-public class BezierShape {
+public class Shape {
   private int _N = 20;
-  private ArrayList<PVector> _points = new ArrayList<>();
+  private ArrayList<Point> _points = new ArrayList<>();
   private ArrayList<PVector> _tangents = new ArrayList<>();
   private boolean _isSymH = false;
   private boolean _isSymV = false;
@@ -11,10 +11,14 @@ public class BezierShape {
   private float _strokeWeight = 2f;
   private color _strokeColor = #FFFFFF;
   private color _fillColor = 72;
+  
+  // dynamic
+  private int _lifeTime = 1000; // -1 stand for infinite
 
-  private boolean _isTangent = false; // for debug
+  // Debug
+  private boolean _isTangent = false;
 
-  public BezierShape(int n_) {
+  public Shape(int n_) {
     this._N = n_;
   }
 
@@ -33,23 +37,23 @@ public class BezierShape {
   public void setVerticalSym(boolean isSymV_) {
     this._isSymV = isSymV_;
   }
-  
+
   public void setPointSize(float pointS_) {
     this._pointSize = pointS_;
   }
-  
+
   public void setStrokeWeight(float strokeW_) {
     this._strokeWeight = strokeW_;
   }
-  
+
   public void setStrokeColor(color strokeC_) {
     this._strokeColor = strokeC_ != -1 ? strokeC_ : this._strokeColor;
   }
-  
+
   public void setFillColor(color fillC_) {
     this._fillColor = fillC_ != -1 ? fillC_ : this._fillColor;
   }
-  
+
   public void setPointColor(color pointC_) {
     this._pointColor = pointC_ != -1 ? pointC_ : this._pointColor;
   }
@@ -58,10 +62,21 @@ public class BezierShape {
   //--------- METHODS ---------
   //---------------------------
 
+  public void update() {
+    if (this._points.size() > 0) {
+      for (int i = 0; i < this._points.size(); i++) {
+        if (!this._points.get(i).isAlive()) {
+          this._points.remove(i);
+          println("KILL");
+        }
+      }
+    }
+  }
+
   public void pushPoint(float x, float y) {
     if (x != 0.0 && y != 0.0) { // avoid first point
       // 1 - add new values
-      PVector curPos_ = new PVector(x, y);
+      Point curPos_ = new Point(x, y, this._lifeTime);
       // this._points.get(_curIndex] = curPos_;
       this._points.add(curPos_);
 
@@ -99,15 +114,13 @@ public class BezierShape {
     strokeWeight(this._strokeWeight);
     stroke(this._strokeColor);
     fill(this._fillColor);
-    
-    println(this._strokeColor);
 
     // 2 - draw lines
     for (int i = 0; i < this._points.size(); i++) {
       // Points
-      PVector p0_ = this._points.get(i).copy();           // first point
+      PVector p0_ = this._points.get(i).getPoint();           // first point
       int j = i+1 < this._points.size() ? i+1 : 0; // index of second point
-      PVector p1_ = this._points.get(j).copy();           // second point
+      PVector p1_ = this._points.get(j).getPoint();           // second point
 
       line(p0_.x, p0_.y, p1_.x, p1_.y);
 
@@ -135,17 +148,19 @@ public class BezierShape {
       // Compute tangents
       this._tangents = new ArrayList<>(); // reset (use .removeAll() ?)
       for (int i = 0; i < this._points.size(); i++) {
-        PVector prevPoint_ = this._points.get(i > 0 ? i-1 : this._points.size()-1).copy();
-        PVector nextPoint_ = this._points.get(i+1 < this._points.size() ? i+1 : 0).copy();
+        PVector prevPoint_ = this._points.get(i > 0 ? i-1 : this._points.size()-1).getPoint();
+        PVector nextPoint_ = this._points.get(i+1 < this._points.size() ? i+1 : 0).getPoint();
         this._tangents.add(nextPoint_.sub(prevPoint_));
       }
 
       // Draw curves
+      beginShape();
+      vertex(this._points.get(0).x, this._points.get(0).y);
       for (int i = 0; i < this._points.size(); i++) {
         // Points
-        PVector p0_ = this._points.get(i).copy();           // first point
+        PVector p0_ = this._points.get(i).getPoint();           // first point
         int j = i+1 < this._points.size() ? i+1 : 0; // index of second point
-        PVector p1_ = this._points.get(j).copy();           // second point
+        PVector p1_ = this._points.get(j).getPoint();           // second point
 
         // Anchor points
         float mag_ = dist (p0_.x, p0_.y, p1_.x, p1_.y);
@@ -163,19 +178,20 @@ public class BezierShape {
         }
 
         // Draw bezier
-        bezier(this._points.get(i).x, this._points.get(i).y, anchor0_.x, anchor0_.y, anchor1_.x, anchor1_.y, this._points.get(j).x, this._points.get(j).y);
-
-        // symetrical
-        if (this._isSymH) {
-          bezier(width - this._points.get(i).x, this._points.get(i).y, width - anchor0_.x, anchor0_.y, width - anchor1_.x, anchor1_.y, width - this._points.get(j).x, this._points.get(j).y);
-        }
-        if (this._isSymV) {
-          bezier(this._points.get(i).x, height - this._points.get(i).y, anchor0_.x, height - anchor0_.y, anchor1_.x, height - anchor1_.y, this._points.get(j).x, height - this._points.get(j).y);
-          if (this._isSymH) {
-            bezier(width - this._points.get(i).x, height - this._points.get(i).y, width - anchor0_.x, height - anchor0_.y, width - anchor1_.x, height - anchor1_.y, width - this._points.get(j).x, height - this._points.get(j).y);
-          }
-        }
+        bezierVertex(anchor0_.x, anchor0_.y, anchor1_.x, anchor1_.y, this._points.get(j).x, this._points.get(j).y);
       }
+      endShape();
+
+      // symetrical
+      //if (this._isSymH) {
+      //  bezierVertex(width - this._points.get(i).x, this._points.get(i).y, width - anchor0_.x, anchor0_.y, width - anchor1_.x, anchor1_.y, width - this._points.get(j).x, this._points.get(j).y);
+      //}
+      //if (this._isSymV) {
+      //  bezierVertex(this._points.get(i).x, height - this._points.get(i).y, anchor0_.x, height - anchor0_.y, anchor1_.x, height - anchor1_.y, this._points.get(j).x, height - this._points.get(j).y);
+      //  if (this._isSymH) {
+      //    bezierVertex(width - this._points.get(i).x, height - this._points.get(i).y, width - anchor0_.x, height - anchor0_.y, width - anchor1_.x, height - anchor1_.y, width - this._points.get(j).x, height - this._points.get(j).y);
+      //  }
+      //}
     }
   }
 }
