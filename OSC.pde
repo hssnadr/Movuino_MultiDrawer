@@ -29,7 +29,9 @@ public class OSC implements Runnable {
   private boolean _isPoints = false;
   private boolean _isLines = false;
   private boolean _isCurves = false;
+  private boolean _isStroke = true;
   private color _strokeC = -1;
+  private boolean _isFill = false;
   private color _fillC = -1;
   private color _pointC = -1;
 
@@ -105,8 +107,16 @@ public class OSC implements Runnable {
     return this._pointC;
   }
 
+  public boolean isStroke() {
+    return this._isStroke;
+  }
+  
   public color getStrokeColor() {
     return this._strokeC;
+  }
+  
+  public boolean isFill() {
+    return this._isStroke;
   }
   
   public color getFillColor() {
@@ -168,6 +178,7 @@ public class OSC implements Runnable {
   }
 
   void oscEvent(OscMessage theOscMessage) {
+    println(theOscMessage);
     if (theOscMessage.checkAddrPattern("/drawer/imu")) {
       this.device = "Drawer";
       if (theOscMessage.checkTypetag("fff")) {

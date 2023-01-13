@@ -26,7 +26,6 @@ public class Point {
   
   public boolean isAlive() {
     if(this._timeLife > 0) {
-      println(millis() - this._timerLife0 < this._timeLife);
       return millis() - this._timerLife0 < this._timeLife;
     } else {
       return true;

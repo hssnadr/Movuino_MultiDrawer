@@ -67,7 +67,6 @@ public class Shape {
       for (int i = 0; i < this._points.size(); i++) {
         if (!this._points.get(i).isAlive()) {
           this._points.remove(i);
-          println("KILL");
         }
       }
     }
