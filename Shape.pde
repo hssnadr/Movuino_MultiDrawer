@@ -11,7 +11,7 @@ public class Shape {
   private float _strokeWeight = 2f;
   private color _strokeColor = #FFFFFF;
   private color _fillColor = 72;
-  
+
   // dynamic
   private int _lifeTime = 1000; // -1 stand for infinite
 
@@ -169,29 +169,88 @@ public class Shape {
         PVector anchor0_ = p0_.copy().add(this._tangents.get(i).setMag(mag_));
         PVector anchor1_ = p1_.copy().sub(this._tangents.get(j).setMag(mag_));
 
-        // for debug only
-        if (_isTangent) {
-          stroke(0, 255, 0);
-          line(this._points.get(i).x, this._points.get(i).y, anchor0_.x, anchor0_.y);
-          stroke(0, 0, 255);
-          line(anchor1_.x, anchor1_.y, this._points.get(j).x, this._points.get(j).y);
-        }
-
         // Draw bezier
         bezierVertex(anchor0_.x, anchor0_.y, anchor1_.x, anchor1_.y, this._points.get(j).x, this._points.get(j).y);
       }
       endShape();
 
       // symetrical
-      //if (this._isSymH) {
-      //  bezierVertex(width - this._points.get(i).x, this._points.get(i).y, width - anchor0_.x, anchor0_.y, width - anchor1_.x, anchor1_.y, width - this._points.get(j).x, this._points.get(j).y);
-      //}
-      //if (this._isSymV) {
-      //  bezierVertex(this._points.get(i).x, height - this._points.get(i).y, anchor0_.x, height - anchor0_.y, anchor1_.x, height - anchor1_.y, this._points.get(j).x, height - this._points.get(j).y);
-      //  if (this._isSymH) {
-      //    bezierVertex(width - this._points.get(i).x, height - this._points.get(i).y, width - anchor0_.x, height - anchor0_.y, width - anchor1_.x, height - anchor1_.y, width - this._points.get(j).x, height - this._points.get(j).y);
-      //  }
-      //}
+      if (this._isSymH) {
+        beginShape();
+        vertex(width - this._points.get(0).x, this._points.get(0).y);
+        for (int i = 0; i < this._points.size(); i++) {
+          PVector p0_ = this._points.get(i).getPoint();
+          int j = i+1 < this._points.size() ? i+1 : 0;
+          PVector p1_ = this._points.get(j).getPoint();
+
+          // Anchor points
+          float mag_ = dist (p0_.x, p0_.y, p1_.x, p1_.y);
+          mag_ /= 2.0f;
+
+          PVector anchor0_ = p0_.copy().add(this._tangents.get(i).setMag(mag_));
+          PVector anchor1_ = p1_.copy().sub(this._tangents.get(j).setMag(mag_));
+          bezierVertex(width - anchor0_.x, anchor0_.y, width - anchor1_.x, anchor1_.y, width - this._points.get(j).x, this._points.get(j).y);
+        }
+        endShape();
+      }
+      if (this._isSymV) {
+        beginShape();
+        vertex(this._points.get(0).x, height - this._points.get(0).y);
+        for (int i = 0; i < this._points.size(); i++) {
+          PVector p0_ = this._points.get(i).getPoint();
+          int j = i+1 < this._points.size() ? i+1 : 0;
+          PVector p1_ = this._points.get(j).getPoint();
+
+          // Anchor points
+          float mag_ = dist (p0_.x, p0_.y, p1_.x, p1_.y);
+          mag_ /= 2.0f;
+
+          PVector anchor0_ = p0_.copy().add(this._tangents.get(i).setMag(mag_));
+          PVector anchor1_ = p1_.copy().sub(this._tangents.get(j).setMag(mag_));
+          bezierVertex(anchor0_.x, height - anchor0_.y, anchor1_.x, height - anchor1_.y, this._points.get(j).x, height - this._points.get(j).y);
+        }
+        endShape();
+
+        if (this._isSymH) {
+          beginShape();
+          vertex(width - this._points.get(0).x, height - this._points.get(0).y);
+          for (int i = 0; i < this._points.size(); i++) {
+            PVector p0_ = this._points.get(i).getPoint();
+            int j = i+1 < this._points.size() ? i+1 : 0;
+            PVector p1_ = this._points.get(j).getPoint();
+
+            // Anchor points
+            float mag_ = dist (p0_.x, p0_.y, p1_.x, p1_.y);
+            mag_ /= 2.0f;
+
+            PVector anchor0_ = p0_.copy().add(this._tangents.get(i).setMag(mag_));
+            PVector anchor1_ = p1_.copy().sub(this._tangents.get(j).setMag(mag_));
+            bezierVertex(width - anchor0_.x, height - anchor0_.y, width - anchor1_.x, height - anchor1_.y, width - this._points.get(j).x, height - this._points.get(j).y);
+          }
+          endShape();
+        }
+      }
+
+      // for debug only
+      if (_isTangent) {
+        for (int i = 0; i < this._points.size(); i++) {
+          PVector p0_ = this._points.get(i).getPoint();
+          int j = i+1 < this._points.size() ? i+1 : 0;
+          PVector p1_ = this._points.get(j).getPoint();
+
+          // Anchor points
+          float mag_ = dist (p0_.x, p0_.y, p1_.x, p1_.y);
+          mag_ /= 2.0f;
+
+          PVector anchor0_ = p0_.copy().add(this._tangents.get(i).setMag(mag_));
+          PVector anchor1_ = p1_.copy().sub(this._tangents.get(j).setMag(mag_));
+
+          stroke(0, 255, 0);
+          line(this._points.get(i).x, this._points.get(i).y, anchor0_.x, anchor0_.y);
+          stroke(0, 0, 255);
+          line(anchor1_.x, anchor1_.y, this._points.get(j).x, this._points.get(j).y);
+        }
+      }
     }
   }
 }
