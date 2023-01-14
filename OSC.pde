@@ -116,7 +116,7 @@ public class OSC implements Runnable {
   }
   
   public boolean isFill() {
-    return this._isStroke;
+    return this._isFill;
   }
   
   public color getFillColor() {

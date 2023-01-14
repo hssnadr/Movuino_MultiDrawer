@@ -8,8 +8,10 @@ public class Shape {
   // style
   private float _pointSize = 10f;
   private color _pointColor = #FFFFFF;
+  private boolean _isStroke = true;
   private float _strokeWeight = 2f;
   private color _strokeColor = #FFFFFF;
+  private boolean _isFill = false;
   private color _fillColor = 72;
 
   // dynamic
@@ -42,12 +44,20 @@ public class Shape {
     this._pointSize = pointS_;
   }
 
+  public void isStroke(boolean is_) {
+    this._isStroke = is_;
+  }
+
   public void setStrokeWeight(float strokeW_) {
     this._strokeWeight = strokeW_;
   }
 
   public void setStrokeColor(color strokeC_) {
     this._strokeColor = strokeC_ != -1 ? strokeC_ : this._strokeColor;
+  }
+
+  public void isFill(boolean is_) {
+    this._isFill = is_;
   }
 
   public void setFillColor(color fillC_) {
@@ -66,7 +76,7 @@ public class Shape {
     if (this._points.size() > 0) {
       for (int i = 0; i < this._points.size(); i++) {
         if (!this._points.get(i).isAlive()) {
-          this._points.remove(i);
+          this._points.remove(i); // remove dead points (if lifeTime != -1)
         }
       }
     }
@@ -110,37 +120,43 @@ public class Shape {
 
   public void drawLines() {
     // 1 - style lines
-    strokeWeight(this._strokeWeight);
-    stroke(this._strokeColor);
-    fill(this._fillColor);
+    pushShapeStyle();
 
     // 2 - draw lines
+    beginShape();
     for (int i = 0; i < this._points.size(); i++) {
       // Points
-      PVector p0_ = this._points.get(i).getPoint();           // first point
-      int j = i+1 < this._points.size() ? i+1 : 0; // index of second point
-      PVector p1_ = this._points.get(j).getPoint();           // second point
+      vertex(this._points.get(i).getPoint().x, this._points.get(i).getPoint().y);
+    }
+    endShape(CLOSE);
 
-      line(p0_.x, p0_.y, p1_.x, p1_.y);
-
-      // symetrical
-      if (this._isSymH) {
-        line(width - p0_.x, p0_.y, width - p1_.x, p1_.y);
+    // 3 - symmetry
+    if (this._isSymH) {
+      beginShape();
+      for (int i = 0; i < this._points.size(); i++) {
+        vertex(width - this._points.get(i).getPoint().x, this._points.get(i).getPoint().y); // horizontal
       }
-      if (this._isSymV) {
-        line(p0_.x, height - p0_.y, p1_.x, height - p1_.y);
-        if (this._isSymH) {
-          line(width - p0_.x, height - p0_.y, width - p1_.x, height - p1_.y);
+      endShape(CLOSE);
+    }
+    if (this._isSymV) {
+      beginShape();
+      for (int i = 0; i < this._points.size(); i++) {
+        vertex(this._points.get(i).getPoint().x, height - this._points.get(i).getPoint().y); // vertical
+      }
+      endShape(CLOSE);
+      if (this._isSymH) {
+        beginShape();
+        for (int i = 0; i < this._points.size(); i++) {
+          vertex(width - this._points.get(i).getPoint().x, height - this._points.get(i).getPoint().y); // both
         }
       }
+      endShape(CLOSE);
     }
   }
 
   public void drawBeziers() {
     // 1 - style beziers
-    strokeWeight(this._strokeWeight);
-    stroke(this._strokeColor);
-    fill(this._fillColor);
+    pushShapeStyle();
 
     // 2 - draw beziers
     if (this._points.size() > 0) {
@@ -251,5 +267,20 @@ public class Shape {
         }
       }
     }
+  }
+
+  private void pushShapeStyle() {
+    // stroke style
+    if (this._isStroke) {
+      strokeWeight(this._strokeWeight);
+      stroke(this._strokeColor);
+    } else
+      noStroke();
+
+    // fill style
+    if (this._isFill)
+      fill(this._fillColor);
+    else
+      noFill();
   }
 }
