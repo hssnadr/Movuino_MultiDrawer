@@ -95,7 +95,9 @@ public class Drawer {
 
         // colors
         this._shape.setPointColor(this._osc.getPointColor());
+        this._shape.isStroke(this._osc.isStroke());
         this._shape.setStrokeColor(this._osc.getStrokeColor());
+        this._shape.isFill(this._osc.isFill());
         this._shape.setFillColor(this._osc.getFillColor());
 
         // display mode

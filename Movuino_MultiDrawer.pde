@@ -6,6 +6,8 @@ Drawer drawer4 = new Drawer(4300, 4301);
 
 void setup() {
   size(720, 720);
+  blendMode(MULTIPLY);
+  strokeJoin(ROUND);
 
   drawer0.isMouse(true);
   drawer0.begin();
@@ -24,7 +26,7 @@ void setup() {
 }
 
 void draw() {
-  background(51);
+  background(255);
 
   drawer0.update();
   drawer1.update();

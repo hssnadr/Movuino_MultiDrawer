@@ -278,6 +278,13 @@ public class OSC implements Runnable {
         return;
       }
     }
+    if (theOscMessage.checkAddrPattern("/drawer/stroke")) {
+      this.device = "Drawer";
+      if (theOscMessage.checkTypetag("i")) {
+        this._isStroke = theOscMessage.get(0).intValue() != 0 ? true : false;
+        return;
+      }
+    }
     if (theOscMessage.checkAddrPattern("/drawer/strokeC")) {
       this.device = "Drawer";
       println("OSC receive stroke color"); 
@@ -288,6 +295,13 @@ public class OSC implements Runnable {
         int a_ = int(255.0 * theOscMessage.get(3).floatValue());
         this._strokeC = color(r_,g_,b_,a_);
         println(this._strokeC);
+        return;
+      }
+    }
+    if (theOscMessage.checkAddrPattern("/drawer/fill")) {
+      this.device = "Drawer";
+      if (theOscMessage.checkTypetag("i")) {
+        this._isFill = theOscMessage.get(0).intValue() != 0 ? true : false;
         return;
       }
     }
