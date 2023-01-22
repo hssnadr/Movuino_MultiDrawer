@@ -7,10 +7,10 @@ public class Shape {
 
   // style
   private float _pointSize = 10f;
-  private color _pointColor = #FFFFFF;
+  private color _pointColor = #000000;
   private boolean _isStroke = true;
   private float _strokeWeight = 2f;
-  private color _strokeColor = #FFFFFF;
+  private color _strokeColor = #000000;
   private boolean _isFill = false;
   private color _fillColor = 72;
 

@@ -17,10 +17,10 @@ void setup() {
 
   drawer2.begin();
   drawer2.startOSC();
-  
+
   drawer3.begin();
   drawer3.startOSC();
-  
+
   drawer4.begin();
   drawer4.startOSC();
 }
@@ -34,7 +34,7 @@ void draw() {
   drawer3.update();
   drawer4.update();
 
-  // drawer0.draw();
+  drawer0.draw();
   drawer1.draw();
   drawer2.draw();
   drawer3.draw();
