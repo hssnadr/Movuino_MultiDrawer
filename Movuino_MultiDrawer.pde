@@ -26,7 +26,7 @@ void setup() {
 }
 
 void draw() {
-  background(255);
+  background(51);
 
   drawer0.update();
   drawer1.update();
@@ -34,7 +34,7 @@ void draw() {
   drawer3.update();
   drawer4.update();
 
-  drawer0.draw();
+  // drawer0.draw();
   drawer1.draw();
   drawer2.draw();
   drawer3.draw();
