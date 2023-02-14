@@ -26,9 +26,9 @@ public class OSC implements Runnable {
   private boolean _isMouse = false;
   private boolean _isSymH = false;
   private boolean _isSymV = false;
-  private boolean _isPoints = false;
+  private boolean _isPoints = true;
   private boolean _isLines = false;
-  private boolean _isCurves = false;
+  private boolean _isCurves = true;
   private boolean _isStroke = true;
   private color _strokeC = -1;
   private boolean _isFill = false;

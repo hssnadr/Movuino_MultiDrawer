@@ -3,7 +3,7 @@ public class Drawer {
   private boolean _isMouse = false;
   private float _maxRatio = 30;
   private float _scale = 1.0f;
-  private float _pointSize = 1.0f;
+  private float _pointSize = 10.0f;
   private float _strokeWeight = 1.0f;
   private boolean _isBeziers = true;
   private boolean _isLines = false;
