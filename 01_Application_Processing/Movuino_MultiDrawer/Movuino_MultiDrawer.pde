@@ -6,7 +6,7 @@ Drawer drawer4 = new Drawer(4300, 4301);
 
 void setup() {
   size(720, 720);
-  blendMode(MULTIPLY);
+  // blendMode(MULTIPLY);
   strokeJoin(ROUND);
 
   drawer0.isMouse(true);
