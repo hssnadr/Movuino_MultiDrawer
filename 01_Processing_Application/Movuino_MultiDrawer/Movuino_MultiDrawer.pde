@@ -5,7 +5,7 @@ Drawer drawer3 = new Drawer(4200, 4201);
 Drawer drawer4 = new Drawer(4300, 4301);
 
 void setup() {
-  size(720, 720);
+  size(1080, 720);
   // blendMode(MULTIPLY);
   strokeJoin(ROUND);
 
