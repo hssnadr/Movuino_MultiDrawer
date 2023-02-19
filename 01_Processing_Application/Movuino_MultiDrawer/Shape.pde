@@ -1,5 +1,5 @@
 public class Shape {
-  private int _N = 20;
+  private int _N = 10;
   private ArrayList<Point> _points = new ArrayList<>();
   private ArrayList<PVector> _tangents = new ArrayList<>();
   private boolean _isSymH = false;

@@ -1,8 +1,7 @@
 public class Drawer {
   // OSC parameters
   private boolean _isMouse = false;
-  private float _maxRatio = 30;
-  private float _scale = 1.0f;
+  private float _scale = 0.1;
   private float _pointSize = 10.0f;
   private float _strokeWeight = 1.0f;
   private boolean _isBeziers = true;
@@ -119,9 +118,11 @@ public class Drawer {
         x_ = mouseX; // mouse control
         y_ = mouseY;
       } else {
-        float ratio_ = 1.0f / (this._maxRatio * this._scale);
-        x_ = width * (0.5f + this._osc.getPoint().x * ratio_); // sensor control
-        y_ = height * (0.5f + this._osc.getPoint().y * ratio_);
+        float ratioX_ = this._scale * width;
+        x_ = 0.5 * width + this._osc.getPoint().x * ratioX_;
+
+        float ratioY_ = this._scale * height;
+        y_ = 0.5 * height + this._osc.getPoint().y * ratioY_;
       }
 
       // println(dist(x_, y_, this._meanX.getSmooth(), this._meanY.getSmooth()));
