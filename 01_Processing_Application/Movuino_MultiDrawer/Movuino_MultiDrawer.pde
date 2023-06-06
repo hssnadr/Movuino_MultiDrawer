@@ -4,8 +4,14 @@ Drawer drawer2 = new Drawer(4100, 4101);
 Drawer drawer3 = new Drawer(4200, 4201);
 Drawer drawer4 = new Drawer(4300, 4301);
 
+String fileBackground = "background.jpg";
+PImage imgBackground;
+
 void setup() {
   size(1080, 720);
+  imgBackground = loadImage(fileBackground);
+  imgBackground.resize(width, height);
+
   // blendMode(MULTIPLY);
   strokeJoin(ROUND);
 
@@ -26,7 +32,8 @@ void setup() {
 }
 
 void draw() {
-  background(51);
+  // background(51); 
+  background(imgBackground);
 
   // drawer0.update();
   drawer1.update();
